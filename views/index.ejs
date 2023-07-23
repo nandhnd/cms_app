@@ -1,0 +1,111 @@
+<%- include('header.ejs') %>
+<%  function formatRupiah(money) {
+        return new Intl.NumberFormat('id-ID',
+            { style: 'currency', currency: 'IDR' }
+        ).format(money);
+}%>
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Store EX</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Just example of a store</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="row g-5 p-5">
+            <div class="col-md-8">
+        
+              <article class="blog-post">
+                <div class="row">
+                <%  let no = 1
+                                  data.forEach(data =>{ %>
+
+                                <div class="col-4 mb-5">
+                                    <div class="card h-100">
+                                        <!-- Product image-->
+                                        <img class="card-img-top" src="/img/<%=data.image%>" alt="..." />
+                                        <!-- Product details-->
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <!-- Product name-->
+                                                <h5 class="fw-bolder"><%= data.nama%></h5>
+                                                <!-- Product price-->
+                                                <p id="harga"><%= formatRupiah(data.harga) %></p>
+                                                
+                                            </div>
+                                        </div>
+                                        <!-- Product actions-->
+                                        <form action="/addtocart" method="post">
+                                        <input type="text" class="form-control" id="id" name="id" value="<%= data.id %>" hidden>
+                                        <input type="text" class="form-control" id="nama" name="nama" value="<%= data.nama %>" hidden>
+                                        <input type="text" class="form-control" id="harga" name="harga" value="<%= data.harga %>" hidden>
+                                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">    
+                                            <button class="btn btn-outline-dark w-100" type="submit">Add to cart</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <%  no++}) %>
+                            </div>
+                    </article>
+        
+            </div>
+        
+            <div class="col-md-4">
+              <div class="position-sticky" style="top: 2rem;">
+                <form >
+                        <i class="bi-cart-fill me-1"></i>
+                        <b>Cart</b>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill"><%= session.cart.length %></span>
+                </form>
+                <hr>
+                <div class="table" style="text-align: -webkit-center">
+                    <table class="table table-striped">
+                        <thead class="text-center">
+                            <tr>
+                                <th>no</th>
+                                <th>nama</th>
+                                <th>jumlah</th>
+                                <th>harga</th>
+                                <th>hapus</th>
+                            </tr>
+                        </thead>
+                      <tbody>
+                        <%  
+                            let number = 1
+                            let total = 0
+                            session.cart.forEach(cart =>{
+                            let harga = cart.harga*cart.quantity
+                            total +=  harga%>
+                          <tr>
+                            <td><%= number %></td>
+                            <td><%= cart.nama %></td>
+                            <td><%= cart.quantity %></td>
+                            <td><%= formatRupiah(harga) %></td>
+                            <td><form method="POST" action="/deletefromcart/<%= cart.id %>/resource?_method=DELETE">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">hapus</button></form>
+                            </td>
+                          </tr>
+                        <%  number++}) %>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                            <td></td>
+                            <td colspan="2"><b>Total</b></td>
+                            <td colspan="2"><b><%= formatRupiah(total)%></b></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                    <form action="/checkout" method="post">
+                    <div class="d-grid">
+                        <button class="btn btn-success fw-bold" type="submit" style="background: #198754 !important;">CHECK OUT</button>
+                    </div>
+                    </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+          
+<%- include('footer.ejs')%>

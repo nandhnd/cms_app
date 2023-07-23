@@ -1,0 +1,49 @@
+<%- include('header.ejs') %>
+<script>
+    function submitdata() {
+        let nama = document.getElementById("nama");
+        let harga = document.getElementById("harga");
+        let file = document.getElementById("file").files[0];
+        let formData = new FormData(myForm);
+        
+        fetch('/createnewproduct', {method: "POST", body: formData})
+        .then(function(res){window.location.href="/product"})
+    }    
+</script>
+        <!-- Header-->
+        <header class="bg-dark py-1">
+            <div class="container px-4 px-lg-5 my-3">
+                <div class="text-center text-white">
+                    <h1 class="display-6 fw-bolder" style="text-align: left;">Tambah Produk</h1>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container col-md-6">
+                <form onsubmit="submitdata()" id="myForm">
+                    <div class="form">
+                    <div class="label col-md-6">
+                        <label for="">nama</label>
+                    </div>
+                    <input type="text" class="form-control" id="nama" name="nama" >
+                    </div>
+                    <div class="form">
+                    <div class="label col-md-6">
+                        <label for="">harga</label>
+                    </div>
+                    <input type="text" class="form-control" id="harga" name="harga" >
+                    </div>
+                    <div class="form">
+                    <div class="label col-md-6" >
+                        <label for="">gambar</label>
+                    </div>
+                    <input type="file" id="file" name="file">
+                    </div>
+
+                    <button class="btn btn-sm btn-success mt-3" type="submit">Tambah</button>
+                </form>
+            </div>
+        </section>
+        <!-- Footer-->
+        <%- include('footer.ejs')%>

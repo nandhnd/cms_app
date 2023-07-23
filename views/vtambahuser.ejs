@@ -1,0 +1,40 @@
+<%- include('header.ejs') %>
+<!-- Header-->
+        <header class="bg-dark py-1">
+            <div class="container px-4 px-lg-5 my-3">
+                <div class="text-center text-white">
+                    <h1 class="display-6 fw-bolder" style="text-align: left;">Tambah Produk</h1>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container col-md-6">
+                <form action="/createnewuser" method="post">
+                    <div class="form">
+                    <div class="label col-md-6">
+                        <label for="">username</label>
+                    </div>
+                    <input type="text" class="form-control" id="username" name="username" >
+                    </div>
+                    <div class="form">
+                    <div class="label col-md-6">
+                        <label for="">password</label>
+                    </div>
+                    <input type="password" class="form-control" id="password" name="password" >
+                    </div>
+                    <div class="form">
+                    <div class="label col-md-6">
+                        <label for="">role</label>  
+                    </div>
+                    <select class="form-control" id="role" name="role" >
+                        <option value="admin">admin</option>
+                        <option value="public">public</option>
+                    </select>
+                    </div>
+                    <button class="btn btn-sm btn-success mt-3" type="submit">Tambah</button>
+                </form>
+            </div>
+        </section>
+        <!-- Footer-->
+        <%- include('footer.ejs')%>

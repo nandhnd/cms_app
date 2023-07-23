@@ -1,0 +1,49 @@
+<%- include('header.ejs') %>
+  <!-- Header-->
+        <header class="bg-dark py-1">
+          <div class="container px-4 px-lg-5 my-3">
+              <div class="text-center text-white">
+                  <h1 class="display-6 fw-bolder" style="text-align: left;">Daftar User</h1>
+              </div>
+          </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+              <form action="/tambahuser" method="get">
+              <button class="btn btn-sm btn-success">Tambah User</button></form>  
+              <div class="table" style="text-align: -webkit-center">
+                  <table>
+                    <tr>
+                      <th style="padding-right: 100px;">no</th>
+                      <th style="padding-right: 100px;">id</th>
+                      <th style="padding-right: 100px;">user</th>
+                      <th style="padding-right: 100px;">role</th>
+                      <th colspan="2" style="text-align: center;">action</th>
+                    </tr>
+                    <tbody>
+                      <%  let no = 1
+                          data.forEach(data =>{ %>
+                        <tr>
+                          <td><%= no %></td>
+                          <td><%= data.id %></td>
+                          <td><%= data.username %></td>
+                          <td><%= data.role %></td>
+                          <td>
+                            <% if(!(data.id == '1')){ %>
+                            <form method="POST" action="/edituser/<%= data.id %>"><button class="btn btn-sm btn-outline-dark" type="submit">edit</button></form>
+                            </td>
+                            <td>
+                            <form method="POST" action="/deleteuser/<%= data.id %>/resource?_method=DELETE">
+                            <button class="btn btn-sm btn-outline-danger" type="submit">hapus</button></form>
+                            <% } %>
+                          </td>
+                        </tr>
+                      <%  no++}) %>
+                    </tbody>
+                  </table>
+                </div>
+                
+            </div>
+        </section>
+<%- include('footer.ejs')%>

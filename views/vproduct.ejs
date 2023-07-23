@@ -1,0 +1,62 @@
+<%- include('header.ejs') %>
+        <!-- Header-->
+        <header class="bg-dark py-1">
+            <div class="container px-4 px-lg-5 my-3">
+                <div class="text-center text-white">
+                    <h1 class="display-6 fw-bolder" style="text-align: left;">Daftar Produk</h1>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+              <form action="/tambahproduct" method="get">
+                <button class="btn btn-sm btn-success">Tambah Produk</button></form>  
+                  <div class="table" style="text-align: -webkit-center">
+                      <table>
+                        <tr>
+                          <th style="padding-right: 100px;">no</th>
+                          <th style="padding-right: 100px;">id</th>
+                          <th style="padding-right: 100px;">nama</th>
+                          <th style="padding-right: 100px;">harga</th>
+                          <th colspan="2" style="text-align: center;">action</th>
+                        </tr>
+                        <tbody>
+                          <%  let no = 1
+                              data.forEach(data =>{ %>
+                            <tr>
+                              <td><%= no %></td>
+                              <td><%= data.id %></td>
+                              <td><%= data.nama %></td>
+                              <td class="harga"><%= data.harga %></td>
+                              <td>
+                                <form method="POST" action="/editproduct/<%= data.id %>"><button class="btn btn-sm btn-outline-dark" type="submit">edit</button></form>
+                                </td>
+                                <td>
+                                <form method="POST" action="/deleteproduct/<%= data.id %>/resource?_method=DELETE">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">hapus</button></form>
+                              </td>
+                            </tr>
+                          <%  no++}) %>
+                        </tbody>
+                      </table>
+                    </div>
+                
+            </div>
+        </section>
+
+        <script>
+          /* Fungsi formatRupiah */
+          
+          function rupiah(number){
+            return new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR"
+            }).format(number);
+          }
+          let harga = document.getElementsByClassName("harga");
+          e = rupiah(harga.textContent)
+          harga.innerText = e
+        </script>
+        <!-- Footer-->
+        <%- include('footer.ejs')%>
